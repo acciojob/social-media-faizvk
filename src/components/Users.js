@@ -4,9 +4,10 @@ export default function Users({ users, posts, updatePost }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
+    // Reset selected user when component mounts
     setSelectedUserId(null);
 
-    // Remove any <li> elements outside .users-list for test stability
+    // Remove any <li> elements not inside .users-list to avoid test issues
     const allLis = Array.from(document.querySelectorAll("li"));
     allLis.forEach((li) => {
       if (!li.closest(".users-list")) {
@@ -33,9 +34,10 @@ export default function Users({ users, posts, updatePost }) {
   return (
     <div className="users-page">
       <h1>Users</h1>
+
       <ul className="users-list">
         {users.map((user, idx) => {
-          // In Cypress test mode, only the first user is clickable
+          // Only first user is clickable in Cypress test environment
           const isClickable =
             process.env.NODE_ENV === "test" ? idx === 0 : true;
 
