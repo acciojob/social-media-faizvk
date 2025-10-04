@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// Import 'Link' from react-router-dom
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Posts from "./Posts";
 import PostDetails from "./PostDetails";
 import Users from "./Users";
@@ -50,10 +51,11 @@ export default function App() {
         <div>
           {/* this element satisfies .App > :nth-child(1) existence check */}
         </div>
+        {/* FIX: Replaced 'a' tags with 'Link' components for proper SPA navigation */}
         <nav>
-          <a href="/">Posts</a>
-          <a href="/users">Users</a>
-          <a href="/notifications">Notifications</a>
+          <Link to="/">Posts</Link>
+          <Link to="/users">Users</Link>
+          <Link to="/notifications">Notifications</Link>
         </nav>
 
         <Switch>
