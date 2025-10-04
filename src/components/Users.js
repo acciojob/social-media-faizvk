@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Users({ users, posts }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
+
+  useEffect(() => {
+    setSelectedUserId(null);
+  }, []);
 
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
@@ -15,9 +19,16 @@ export default function Users({ users, posts }) {
       <h1>Users</h1>
       <ul className="users-list">
         {users.map((user) => (
-          <li key={user.id}>
-            {/* The onClick is moved to the anchor tag for better accessibility */}
-            <a onClick={() => handleUserClick(user.id)}>{user.name}</a>
+          <li key={user.id} className="user-item">
+            <a
+              href="#user"
+              onClick={(e) => {
+                e.preventDefault();
+                handleUserClick(user.id);
+              }}
+            >
+              {user.name}
+            </a>
           </li>
         ))}
       </ul>
@@ -30,7 +41,6 @@ export default function Users({ users, posts }) {
               <div className="post" key={post.id}>
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>
-                {/* FIX: Render reaction buttons to match test expectation */}
                 <div className="reactions">
                   <button className="reaction">{post.reactions[0]}</button>
                   <button className="reaction">{post.reactions[1]}</button>
