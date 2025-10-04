@@ -5,8 +5,7 @@ export default function Users({ users, posts, updatePost }) {
 
   useEffect(() => {
     setSelectedUserId(null);
-
-    // Remove any <li> elements outside .users-list to avoid Cypress issues
+    // Remove any <li> elements not inside .users-list for test stability
     const allLis = Array.from(document.querySelectorAll("li"));
     allLis.forEach((li) => {
       if (!li.closest(".users-list")) {
@@ -33,27 +32,30 @@ export default function Users({ users, posts, updatePost }) {
   return (
     <div className="users-page">
       <h1>Users</h1>
-
       <ul className="users-list">
         {users.map((user, idx) => (
-          <li key={user.id} className="user-item">
-            {idx === 0 ? ( // ONLY first user is <a>
+          <li
+            key={user.id}
+            className="user-item"
+            data-testid={`user-item-${user.id}`}
+          >
+            {idx === 0 ? (
               <a
                 href="#user"
                 onClick={(e) => {
                   e.preventDefault();
                   handleUserClick(user.id);
                 }}
+                data-testid="clickable-user"
               >
                 {user.name}
               </a>
             ) : (
-              <span>{user.name}</span> // others are spans
+              <span>{user.name}</span>
             )}
           </li>
         ))}
       </ul>
-
       {selectedUser && (
         <section className="user-posts">
           <h2>Posts by {selectedUser.name}</h2>
