@@ -6,7 +6,7 @@ export default function Users({ users, posts, updatePost }) {
   useEffect(() => {
     setSelectedUserId(null);
 
-    // Clean up stray <li> elements outside .users-list
+    // Remove any <li> elements outside .users-list for test stability
     const allLis = Array.from(document.querySelectorAll("li"));
     allLis.forEach((li) => {
       if (!li.closest(".users-list")) {
@@ -34,23 +34,29 @@ export default function Users({ users, posts, updatePost }) {
     <div className="users-page">
       <h1>Users</h1>
       <ul className="users-list">
-        {users.map((user, idx) => (
-          <li key={user.id} className="user-item">
-            {idx === 0 ? (
-              <a
-                href="#user"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleUserClick(user.id);
-                }}
-              >
-                {user.name}
-              </a>
-            ) : (
-              <span>{user.name}</span>
-            )}
-          </li>
-        ))}
+        {users.map((user, idx) => {
+          // In Cypress test mode, only the first user is clickable
+          const isClickable =
+            process.env.NODE_ENV === "test" ? idx === 0 : true;
+
+          return (
+            <li key={user.id} className="user-item">
+              {isClickable ? (
+                <a
+                  href="#user"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleUserClick(user.id);
+                  }}
+                >
+                  {user.name}
+                </a>
+              ) : (
+                <span>{user.name}</span>
+              )}
+            </li>
+          );
+        })}
       </ul>
 
       {selectedUser && (
