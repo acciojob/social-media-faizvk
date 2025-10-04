@@ -27,6 +27,10 @@ nav a {
   flex-direction: column;
   gap: 12px;
 }
+.posts-header {
+  font-weight: bold;
+  padding: 8px;
+}
 .post {
   border: 1px solid #ddd;
   padding: 10px;

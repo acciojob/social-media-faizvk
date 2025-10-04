@@ -51,7 +51,10 @@ export default function PostDetails({ match, posts, updatePost, users }) {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
-            <button onClick={save}>Save</button>
+            <div style={{ marginTop: 8 }}>
+              <button onClick={() => setEditing(false)}>Cancel</button>
+              <button onClick={save}>Save</button>
+            </div>
           </>
         )}
       </div>

@@ -6,7 +6,7 @@ export default function Users({ users, posts }) {
     <div className="users-page">
       <h1>Users</h1>
       <ul>
-        {users.map((u, i) => (
+        {users.map((u) => (
           <li key={u.id} onClick={() => setSelectedUser(u.id)}>
             {u.name}
           </li>

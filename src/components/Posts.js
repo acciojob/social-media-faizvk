@@ -14,8 +14,11 @@ export default function Posts({ posts, addPost, updatePost, users }) {
   return (
     <div className="posts-page">
       <CreatePostForm users={users} addPost={addPost} />
+
       <div className="posts-list">
-        {posts.map((p, idx) => (
+        <div className="posts-header">Posts Section</div>
+
+        {posts.map((p) => (
           <div className="post" key={p.id}>
             <h2 className="post-title">{p.title}</h2>
             <p className="post-author">
