@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function Users({ users, posts }) {
+export default function Users({ users, posts, updatePost }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
 
   useEffect(() => {
@@ -9,6 +9,15 @@ export default function Users({ users, posts }) {
 
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
+  };
+
+  // FIX: Add the same reaction logic from Posts.js
+  const reactTo = (postId, index) => {
+    updatePost(postId, {
+      reactions: posts
+        .find((p) => p.id === postId)
+        .reactions.map((r, i) => (i === index && index < 4 ? r + 1 : r)),
+    });
   };
 
   const selectedUser = users.find((u) => u.id === selectedUserId);
@@ -42,11 +51,37 @@ export default function Users({ users, posts }) {
                 <h3>{post.title}</h3>
                 <p>{post.content}</p>
                 <div className="reactions">
-                  <button className="reaction">{post.reactions[0]}</button>
-                  <button className="reaction">{post.reactions[1]}</button>
-                  <button className="reaction">{post.reactions[2]}</button>
-                  <button className="reaction">{post.reactions[3]}</button>
-                  <button className="reaction">{post.reactions[4]}</button>
+                  {/* FIX: Add onClick handlers to make the buttons functional */}
+                  <button
+                    className="reaction"
+                    onClick={() => reactTo(post.id, 0)}
+                  >
+                    {post.reactions[0]}
+                  </button>
+                  <button
+                    className="reaction"
+                    onClick={() => reactTo(post.id, 1)}
+                  >
+                    {post.reactions[1]}
+                  </button>
+                  <button
+                    className="reaction"
+                    onClick={() => reactTo(post.id, 2)}
+                  >
+                    {post.reactions[2]}
+                  </button>
+                  <button
+                    className="reaction"
+                    onClick={() => reactTo(post.id, 3)}
+                  >
+                    {post.reactions[3]}
+                  </button>
+                  <button
+                    className="reaction"
+                    onClick={() => reactTo(post.id, 4)}
+                  >
+                    {post.reactions[4]}
+                  </button>
                 </div>
               </div>
             ))

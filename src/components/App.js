@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// Import 'Link' from react-router-dom
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Posts from "./Posts";
 import PostDetails from "./PostDetails";
@@ -51,7 +50,6 @@ export default function App() {
         <div>
           {/* this element satisfies .App > :nth-child(1) existence check */}
         </div>
-        {/* FIX: Replaced 'a' tags with 'Link' components for proper SPA navigation */}
         <nav>
           <Link to="/">Posts</Link>
           <Link to="/users">Users</Link>
@@ -82,9 +80,12 @@ export default function App() {
               />
             )}
           />
+          {/* FIX: Pass 'updatePost' function to the Users component */}
           <Route
             path="/users"
-            render={() => <Users users={users} posts={posts} />}
+            render={() => (
+              <Users users={users} posts={posts} updatePost={updatePost} />
+            )}
           />
           <Route
             path="/notifications"
