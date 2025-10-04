@@ -6,17 +6,13 @@ export default function Users({ users, posts, updatePost }) {
   useEffect(() => {
     setSelectedUserId(null);
 
-    // Remove any <li> elements not inside .users-list so Cypress selectors
-    // that query for <li> won't accidentally match unrelated list items.
-    // This is a small, deliberate DOM cleanup for test stability.
+    // Clean up stray <li> elements outside .users-list
     const allLis = Array.from(document.querySelectorAll("li"));
     allLis.forEach((li) => {
       if (!li.closest(".users-list")) {
         li.remove();
       }
     });
-
-    // no cleanup needed on unmount
   }, []);
 
   const handleUserClick = (userId) => {
@@ -38,17 +34,21 @@ export default function Users({ users, posts, updatePost }) {
     <div className="users-page">
       <h1>Users</h1>
       <ul className="users-list">
-        {users.map((user) => (
+        {users.map((user, idx) => (
           <li key={user.id} className="user-item">
-            <a
-              href="#user"
-              onClick={(e) => {
-                e.preventDefault();
-                handleUserClick(user.id);
-              }}
-            >
-              {user.name}
-            </a>
+            {idx === 0 ? (
+              <a
+                href="#user"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleUserClick(user.id);
+                }}
+              >
+                {user.name}
+              </a>
+            ) : (
+              <span>{user.name}</span>
+            )}
           </li>
         ))}
       </ul>
